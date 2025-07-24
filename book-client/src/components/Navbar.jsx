@@ -1,33 +1,46 @@
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = ({ darkMode, setDarkMode }) => {
+  const location = useLocation();
+
+  const navItems = [
+    { path: '/', label: 'Home' },
+    { path: '/add-book', label: 'Add Book' },
+  ];
+
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-indigo-600 text-white dark:bg-indigo-800 shadow-md">
-      <div className="text-xl font-semibold">📚 Book Manager</div>
+    <nav className="bg-indigo-600 dark:bg-gray-800 shadow-md text-white">
+      <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Branding */}
+        <div className="flex items-center space-x-8">
+          <h1 className="text-2xl font-bold">📚 Book Manager</h1>
 
-      <ul className="flex gap-6 font-medium">
-        <li>
-          <a href="#" className="hover:underline">
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#add-book" className="hover:underline">
-            Add Book
-          </a>
-        </li>
-      </ul>
+          {/* Navigation Links */}
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`text-sm hover:underline transition ${
+                location.pathname === item.path ? 'font-bold underline' : ''
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
 
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="p-2 rounded hover:bg-indigo-500 dark:hover:bg-indigo-700"
-        title="Toggle Dark Mode"
-      >
-        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="bg-white dark:bg-gray-700 text-indigo-600 dark:text-white px-3 py-1 rounded hover:opacity-90 transition"
+          aria-label="Toggle Dark Mode"
+        >
+          {darkMode ? '🌞 Light' : '🌙 Dark'}
+        </button>
+      </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

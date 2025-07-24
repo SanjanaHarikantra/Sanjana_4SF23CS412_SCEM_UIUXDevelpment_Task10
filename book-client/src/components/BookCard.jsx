@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
 
-const BookCard = ({ book, onDelete }) => {
+const BookCard = React.memo(({ book, onDelete }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -44,6 +44,6 @@ const BookCard = ({ book, onDelete }) => {
       </div>
     </div>
   );
-};
+});
 
 export default BookCard;

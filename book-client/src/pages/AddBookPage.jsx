@@ -16,23 +16,20 @@ const AddBookForm = ({ onAdd }) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   }, []);
 
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      await onAdd(form);
-      setForm({ title: '', author: '', genre: '', publishedYear: '' });
-      setLoading(false);
-    },
-    [form, onAdd]
-  );
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await onAdd(form);
+    setForm({ title: '', author: '', genre: '', publishedYear: '' });
+    setLoading(false);
+  }, [form, onAdd]);
 
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md space-y-4 mb-6"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md space-y-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-4">
