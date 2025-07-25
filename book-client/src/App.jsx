@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+// App.jsx
+import React from 'react'; // ✅ Required to avoid "React is not defined"
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import BookListPage from './pages/BookListPage';
+import HomePage from './pages/HomePage';
 import AddBookPage from './pages/AddBookPage';
+import Navbar from './components/Navbar';
+import EditBookPage from './pages/EditBookPage'; 
+import BookDetailsPage from "./pages/BookDetailsPage";
+import Footer from './components/Footer'
 
-const App = () => {
-  const [darkMode, setDarkMode] = useState(false);
 
+function App() {
   return (
-    <div className={darkMode ? 'dark bg-gray-900 text-white min-h-screen' : 'bg-gray-100 text-gray-900 min-h-screen'}>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-
-      <Routes>
-        <Route path="/" element={<BookListPage />} />
-        <Route path="/add-book" element={<AddBookPage />} />
-      </Routes>
-
-      <Footer />
-    </div>
+    <>
+      <Navbar />
+      <div className="container mx-auto mt-4 px-4">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/add-book" element={<AddBookPage />} />
+            <Route path="/edit-book/:id" element={<EditBookPage />} /> {/* ✅ Edit route */}
+            <Route path="/book-details/:id" element={<BookDetailsPage />} />
+        </Routes>
+      </div>
+      <Footer/>
+    </>
   );
-};
+}
 
 export default App;
