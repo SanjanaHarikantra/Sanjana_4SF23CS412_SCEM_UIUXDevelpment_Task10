@@ -65,7 +65,7 @@ As part of Task 10, we first intentionally developed an unoptimized version of t
 
 - First Contentful Paint (FCP): 2.1s
 - Largest Contentful Paint (LCP): 3.6s
-- Speed Index: N/A (slow)
+- Speed Index: 2.1s
 
 ### After Optimization (Lighthouse Score: 87)
 
