@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 // Allowed frontend origins
 const allowedOrigins = [
-  "https://sanjana-4sf23cs412-scem-uiuxdevelpment-5tho.onrender.com", // your frontend Render URL
+  "https://book-management-frontend-n9ni.onrender.com", 
   "http://localhost:5173", // local React dev URL
 ];
 
