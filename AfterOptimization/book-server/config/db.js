@@ -5,9 +5,9 @@ dotenv.config(); // Load .env variables
 
 const connectDB = async () => {
   try {
-    const uri = process.env.MONGO_URI; // Get Mongo URI from environment variable
+    const uri = process.env.MONGO_URI; // Get Mongo URI from environment variables
     if (!uri) {
-      throw new Error("❌ MONGO_URI not found in environment variables");
+      throw new Error("MONGO_URI not found in environment variables");
     }
 
     await mongoose.connect(uri, {
@@ -15,9 +15,9 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
 
-    console.log("✅ MongoDB Connected Successfully");
+    console.log("MongoDB connected successfully");
   } catch (error) {
-    console.error("❌ MongoDB connection error:", error.message);
+    console.error("Database connection error:", error.message);
     process.exit(1);
   }
 };
