@@ -8,7 +8,7 @@ const EditBookPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // ✅ Use environment variable for backend URL
+  // Use environment variable for backend URL
   const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
   const [book, setBook] = useState({
