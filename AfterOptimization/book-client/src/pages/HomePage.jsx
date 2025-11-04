@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
+import.meta.env.VITE_BASE_URL
+
 
 const HomePage = () => {
   const [books, setBooks] = useState([]);
