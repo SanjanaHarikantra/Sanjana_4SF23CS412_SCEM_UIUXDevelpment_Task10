@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
 
@@ -13,15 +13,18 @@ const HomePage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 6;
 
+  // ✅ Use Render backend URL or local dev
+  const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+
   const fetchBooks = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/books?page=${page}&limit=${limit}`);
+      const res = await axios.get(`${API_BASE_URL}/api/books?page=${page}&limit=${limit}`);
       setBooks(res.data.books || []);
       setTotalPages(res.data.pages || 1);
     } catch (err) {
       console.error("Error fetching books", err);
     }
-  }, [page]);
+  }, [page, API_BASE_URL]);
 
   useEffect(() => {
     fetchBooks();
@@ -29,7 +32,7 @@ const HomePage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/books/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/books/${id}`);
       fetchBooks();
     } catch (err) {
       console.error("Delete error", err);
@@ -70,6 +73,7 @@ const HomePage = () => {
     <div className="bg-gray-100 min-h-screen py-8 px-4">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">All Available Books</h1>
 
+      {/* Filters + Search */}
       <div className="flex flex-wrap justify-center gap-6 mb-8">
         {/* Filter */}
         <div className="flex flex-col">
@@ -81,7 +85,9 @@ const HomePage = () => {
           >
             <option value="">All</option>
             {[...new Set(books.map((b) => b.author))].map((author) => (
-              <option key={author} value={author}>{author}</option>
+              <option key={author} value={author}>
+                {author}
+              </option>
             ))}
           </select>
         </div>
@@ -113,6 +119,7 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full bg-white shadow-md rounded-md overflow-hidden">
           <thead className="bg-gray-500 text-white text-sm">
@@ -127,7 +134,9 @@ const HomePage = () => {
           <tbody>
             {filteredBooks.length === 0 ? (
               <tr>
-                <td colSpan="5" className="text-center py-6 text-gray-500">No books found.</td>
+                <td colSpan="5" className="text-center py-6 text-gray-500">
+                  No books found.
+                </td>
               </tr>
             ) : (
               filteredBooks.map((book, index) => (
@@ -172,7 +181,9 @@ const HomePage = () => {
         >
           Previous
         </button>
-        <span className="text-sm text-gray-700">Page {page} of {totalPages}</span>
+        <span className="text-sm text-gray-700">
+          Page {page} of {totalPages}
+        </span>
         <button
           onClick={handleNext}
           disabled={page === totalPages}

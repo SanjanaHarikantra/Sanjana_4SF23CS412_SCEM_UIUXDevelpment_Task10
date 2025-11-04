@@ -7,12 +7,15 @@ const BookDetailsPage = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Use your Render backend URL here
+  const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+
   useEffect(() => {
     const controller = new AbortController();
 
     const fetchBookDetails = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/books/${id}`, {
+        const { data } = await axios.get(`${API_BASE_URL}/api/books/${id}`, {
           signal: controller.signal,
         });
         setBook(data);
@@ -30,7 +33,7 @@ const BookDetailsPage = () => {
     fetchBookDetails();
 
     return () => controller.abort();
-  }, [id]);
+  }, [id, API_BASE_URL]);
 
   if (loading)
     return (

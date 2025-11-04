@@ -6,6 +6,9 @@ const EditBookPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // ✅ Use environment variable for backend URL
+  const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+
   const [book, setBook] = useState({
     bookname: '',
     author: '',
@@ -19,7 +22,7 @@ const EditBookPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/books/${id}`)
+      .get(`${API_BASE_URL}/api/books/${id}`)
       .then((res) => {
         const data = res.data || {};
         setBook({
@@ -34,7 +37,7 @@ const EditBookPage = () => {
         });
       })
       .catch((err) => console.error('Fetch Error:', err));
-  }, [id]);
+  }, [id, API_BASE_URL]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +47,7 @@ const EditBookPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/books/${id}`, book)
+      .put(`${API_BASE_URL}/api/books/${id}`, book)
       .then(() => navigate('/'))
       .catch((err) => console.error('Update Error:', err));
   };
