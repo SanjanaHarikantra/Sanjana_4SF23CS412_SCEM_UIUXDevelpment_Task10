@@ -2,8 +2,6 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
-import.meta.env.VITE_BASE_URL
-
 
 const HomePage = () => {
   const [books, setBooks] = useState([]);
@@ -15,7 +13,7 @@ const HomePage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 6;
 
-  // ✅ Use Render backend URL or local dev
+  // Use Render backend URL or local dev
   const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
   const fetchBooks = useCallback(async () => {
@@ -73,7 +71,9 @@ const HomePage = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen py-8 px-4">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">All Available Books</h1>
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+        All Available Books
+      </h1>
 
       {/* Filters + Search */}
       <div className="flex flex-wrap justify-center gap-6 mb-8">
