@@ -1,7 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
 import axios from "axios";
-import.meta.env.VITE_BASE_URL
-
 
 const AddBookForm = () => {
   const [formData, setFormData] = useState({
@@ -31,11 +29,15 @@ const AddBookForm = () => {
 
       const payload = { ...formData };
       if (!payload.discount) delete payload.discount;
+      // Coerce numbers
+      ["price", "discount", "yearOfPublication", "numberOfPages"].forEach((k) => {
+        if (payload[k] !== undefined && payload[k] !== "") payload[k] = Number(payload[k]);
+      });
 
       try {
         // Use environment variable for backend URL
         const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
-        await axios.post(`${BASE_URL}/api/books`, payload);
+        await axios.post(`${BASE_URL}/api/books`, payload, { headers: { "Content-Type": "application/json" } });
 
         setSuccessMsg("Book added successfully!");
         setFormData({

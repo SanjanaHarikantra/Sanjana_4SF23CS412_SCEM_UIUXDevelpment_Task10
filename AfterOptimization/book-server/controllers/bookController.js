@@ -3,11 +3,27 @@ import Book from "../models/Book.js";
 // Create Book
 export const createBook = async (req, res) => {
   try {
-    const book = new Book(req.body);
+    // Normalize numeric fields if sent as strings
+    const payload = { ...req.body };
+    ["price", "discount", "yearOfPublication", "numberOfPages"].forEach((k) => {
+      if (payload[k] === "" || payload[k] === null) delete payload[k];
+      else if (payload[k] !== undefined) payload[k] = Number(payload[k]);
+    });
+
+    const book = new Book(payload);
     await book.save();
     res.status(201).json(book);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    // Duplicate key error (e.g., ISBN already exists)
+    if (error?.code === 11000) {
+      return res.status(409).json({ error: "ISBN already exists" });
+    }
+    // Mongoose validation errors
+    if (error?.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ error: messages.join(", ") });
+    }
+    res.status(400).json({ error: error.message || "Failed to create book" });
   }
 };
 

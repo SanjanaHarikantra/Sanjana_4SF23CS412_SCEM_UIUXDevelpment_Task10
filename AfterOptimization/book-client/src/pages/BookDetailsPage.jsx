@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import.meta.env.VITE_BASE_URL
-
 
 const BookDetailsPage = () => {
   const { id } = useParams();
