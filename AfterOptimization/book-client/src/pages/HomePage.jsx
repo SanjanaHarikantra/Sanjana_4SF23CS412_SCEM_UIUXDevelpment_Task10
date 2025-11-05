@@ -13,8 +13,8 @@ const HomePage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 6;
 
-  // Use Render backend URL or local dev
-  const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+  // Use backend URL (trim trailing slash)
+  const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
 
   const fetchBooks = useCallback(async () => {
     try {

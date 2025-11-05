@@ -81,6 +81,6 @@ As part of Task 10, we first intentionally developed an unoptimized version of t
 - Reduced resource usage
 - Enhanced user experience
 
-
+## Screenshots
 
 

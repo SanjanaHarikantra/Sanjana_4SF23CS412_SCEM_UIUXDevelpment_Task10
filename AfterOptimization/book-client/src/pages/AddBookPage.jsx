@@ -36,7 +36,7 @@ const AddBookForm = () => {
 
       try {
         // Use environment variable for backend URL
-        const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+        const BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
         await axios.post(`${BASE_URL}/api/books`, payload, { headers: { "Content-Type": "application/json" } });
 
         setSuccessMsg("Book added successfully!");

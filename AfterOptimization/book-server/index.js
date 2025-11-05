@@ -17,11 +17,24 @@ const PORT = process.env.PORT || 5000;
 // CORS: allow all origins (no credentials)
 app.use(
   cors({
-    origin: (origin, cb) => cb(null, true),
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: false,
   })
 );
+// Explicitly handle preflight requests for all routes
+app.options("*", cors({ origin: "*" }));
+
+// Fallback CORS headers to satisfy strict browsers/proxies
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(compression());
 

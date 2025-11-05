@@ -7,8 +7,8 @@ const BookDetailsPage = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Use your Render backend URL here
-  const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+  // Use your backend URL (trim trailing slash)
+  const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
 
   useEffect(() => {
     const controller = new AbortController();
