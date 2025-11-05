@@ -23,8 +23,7 @@ app.use(
     credentials: false,
   })
 );
-// Explicitly handle preflight requests for all routes
-app.options("*", cors({ origin: "*" }));
+// Preflight: handled by global CORS and fallback middleware below (no app.options wildcard)
 
 // Fallback CORS headers to satisfy strict browsers/proxies
 app.use((req, res, next) => {
